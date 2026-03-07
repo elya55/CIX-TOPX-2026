@@ -1577,6 +1577,43 @@ h2.slide-title--white { color:white; }
 .slide--dark .slide-num-badge { color:rgba(255,255,255,.35); }
 
 /* ══════════════════════════════════════
+   PRINT / PDF EXPORT（打印或另存为 PDF 时一页一页）
+══════════════════════════════════════ */
+@media print {
+  html, body { overflow:visible !important; height:auto !important; background:#fff; counter-reset: slide 0; }
+  #navbar, #dots, .nav-arrow, #progress-bar { display:none !important; }
+  #deck {
+    position:static !important; inset:auto !important;
+    transform:none !important; transition:none !important;
+    display:block !important; width:100% !important; height:auto !important;
+  }
+  .slide {
+    flex:none !important; width:100% !important; height:auto !important;
+    min-height:100vh; max-height:100vh;
+    overflow:visible !important;
+    page-break-after:always; page-break-inside:avoid;
+    box-shadow:none; border:1px solid #eee;
+    counter-increment: slide;
+    padding-top: 56px !important;
+  }
+  /* 打印时每页顶部标题栏（页码 + 本页标题） */
+  .slide::before {
+    content: counter(slide) " / 42  ·  " attr(data-title);
+    display:block !important;
+    position:absolute !important; top:0; left:0; right:0;
+    height:48px; line-height:48px; padding:0 40px;
+    background:rgba(245,248,252,1); border-bottom:1px solid #E4EDF5;
+    font-size:12px; font-weight:600; color:#1A3F6F;
+    letter-spacing:0.5px; z-index:10;
+  }
+  .slide:last-child { page-break-after:auto; }
+  /* 打印时所有幻灯片内容都显示（不依赖 .active） */
+  .slide .anim { opacity:1 !important; transform:none !important; }
+  .slide-inner { min-height:auto; }
+  video { pointer-events:none; }
+}
+
+/* ══════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════ */
 /* ══════════════════════════════════════

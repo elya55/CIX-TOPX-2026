@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+# macOS
+.DS_Store
+
+# PDF export output (optional, remove if you want to track)
+# Proposal/proposal-export.pdf
